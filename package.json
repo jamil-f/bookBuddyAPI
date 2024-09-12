@@ -1,0 +1,30 @@
+{
+  "name": "bookbuddyapi",
+  "version": "1.0.0",
+  "description": "api for the bookbuddy react project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "seed:dev": "nodemon ./db/seed.js",
+    "seed":"node ./db/seed.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jamil-f/bookBuddyAPI.git"
+  },
+  "author": "jamil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jamil-f/bookBuddyAPI/issues"
+  },
+  "homepage": "https://github.com/jamil-f/bookBuddyAPI#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "jsonwebtoken": "^4.19.2",
+    "nodemon": "^3.1.4",
+    "pg": "^8.12.0"
+  }
+}
