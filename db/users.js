@@ -81,4 +81,4 @@ const getUser = async ({ email, password }) => {
   };
 
 
-module.exports = { createUser, getUserByEmail, getUserByEmail, getUserById, getUsers, getUser };
+module.exports = { createUser, getUserByEmail, getUserById, getUsers, getUser };

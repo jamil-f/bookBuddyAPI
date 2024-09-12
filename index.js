@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
-
 const PORT = 3000;
 
 const client = require("./db/client");
 
 client.connect();
 
+console.log(process.env.JWT_SECRET);
 
 app.use(express.json());
 //we're registering the routes in /api/index
