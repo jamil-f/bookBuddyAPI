@@ -2,7 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const { getUserById, getUser, getUsers, getUserByEmail, createUser, getUsersReservations } = require("../db");
 
-//const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 
 const { requireUser } = require("./utils");
 

@@ -24,7 +24,7 @@ const getBook = async(id) =>{
 //
 const deleteBook = async(id) => {
     try{
-        const SQL = `DELETE * FROM books WHERE id=$1 RETURNING *`;
+        const SQL = `DELETE FROM books WHERE id=$1 RETURNING *`;
         const {rows:[result]} = await client.query(SQL, [id]);
         return result;
     } catch(err){
@@ -60,7 +60,7 @@ const createBook = async ({
 
 const updateBooks = async (id, available) => {
     try {
-        const SQL = `UPDATE books SET available=$1 WEHRE is=$2 RETURNING *`;
+        const SQL = `UPDATE books SET available=$1 WEHRE id=$2 RETURNING *`;
         const {rows:[book]} = await client.query(SQL, [available, id]);
         return book;
     } catch(err) {
