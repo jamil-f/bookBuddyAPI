@@ -3,6 +3,11 @@ require("dotenv").config();
 const client = require("./client");
 const { createUser, getUserByEmail } = require("./users");
 const { createBook, getBooks } = require("./books")
+const {
+  createReservation,
+  getReservation,
+  deleteReservation,
+} = require("./reservations");
 // Import createbooks from books
 
 const users = [
@@ -25,15 +30,6 @@ const users = [
     password: 'charlie789',
   }]
 
-
-const dropTables = async () => {
-    try{
-        await client.query(`DROP TABLE IF EXISTS users;`);
-        await client.query(`DROP TABLE IF EXISTS books`);
-    } catch(err) {
-        console.log()
-    }
-};
 
 const books = [{
     title: 'The Great Gatsby',
@@ -73,6 +69,15 @@ const books = [{
   },
 ];
 
+const dropTables = async () => {
+  try {
+    await client.query(`DROP TABLE IF EXISTS users CASCADE`);
+    await client.query(`DROP TABLE IF EXISTS books CASCADE`);
+    await client.query(`DROP TABLE IF EXISTS reservations`)
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const createTables = async () => {
     try {
@@ -93,6 +98,11 @@ const createTables = async () => {
             coverimage VARCHAR(255) DEFAULT 'https://images.pexels.com/photos/7034646/pexels-photo-7034646.jpeg',
             available BOOLEAN DEFAULT TRUE
         )`);
+        await client.query(`CREATE TABLE reservations(
+          id SERIAL PRIMARY KEY,
+          bookid INTEGER REFERENCES books(id),
+          userid INTEGER REFERENCES users(id)
+        )`)
     } catch (err) {
         console.log(err);
     }
@@ -100,7 +110,7 @@ const createTables = async () => {
 
 const insertUsers = async () => {
     try {
-        for(const user of users) {
+        for (const user of users) {
             await createUser(user);
         }
     } catch(err) {
@@ -110,7 +120,7 @@ const insertUsers = async () => {
 
 const insertBooks = async () => {
     try {
-        for(const book of books) {
+        for (const book of books) {
             await createBook(book);
         }
     } catch(err) {
@@ -134,8 +144,12 @@ const seedDatabase = async () => {
         console.log("INSERTING USERS...")
         await insertUsers();
         console.log("USERS ADDED SUCESSFULLY!");
+        console.log("INSERTING BOOKS...");
         await insertBooks();
-        await getBooks();
+        await createReservation({ userId: 1, booksId: 1 });
+        console.log(await getReservation(1));
+        await deleteReservation(1);
+        console.log("DELETING");
     } catch(err) {
         console.log(err);
     } finally {
