@@ -1,11 +1,17 @@
 const express = require("express");
+const server = express();
 const app = express();
 require("dotenv").config();
-const PORT = 3000;
+const PORT = process.env.DB_PORT || 3000;
 
 const client = require("./db/client");
 
 client.connect();
+
+server.use(cors());
+
+server.use(express.json());
+server.use(express.urlencoded({ extended: true }));
 
 console.log(process.env.JWT_SECRET);
 
